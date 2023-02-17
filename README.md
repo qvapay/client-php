@@ -44,7 +44,7 @@ $data = [
 	"password" =>  "CffasdKB73iTtzNJN",
 	"c_password" =>  "CffasdKB73iTtzNJN",
 	"invite" =>  "referer_username (OPTIONAL)" 
-]
+];
 	
 $register = new Qvapay\Auth\Register;
 $response = $register->doit($data);
@@ -53,6 +53,15 @@ $response = $register->doit($data);
 /* https://qvapay.com/api/auth/logout */
 $logout = new Qvapay\Auth\Logout;
 $response = $logout->doit();
+
+/* https://qvapay.com/api/v1/info */
+$api_data = [
+    "app_id" => "9955dd29-082f-470b-882d-f4f0f25ea144",
+    "app_secret" => "Zx03ncGDTlBFvZ0JRAq61NUkB82pekNKs1PFkBYAAiadfbzg5l"
+];
+
+$api = new Qvapay\Merchants\Info;
+$response = $api->show($api_data);
 
 print_r($response);
 ```
