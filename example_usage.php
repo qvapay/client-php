@@ -5,8 +5,7 @@ if(session_status() !== PHP_SESSION_NONE) session_start();
 require(__DIR__ . '/src/Qvapay.php');  
 
 $qvapay = new Qvapay;
-$auth_data = ["email" => 'blahblah@gmail.com', "password" => 'blahblahblah'];
-$response = $qvapay->auth($auth_data);
+$qvapay->auth(["email" => 'blahblah@gmail.com', "password" => 'blahblahblah']);
 $response = $qvapay->services();
 
  /*
