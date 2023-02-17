@@ -5,7 +5,7 @@ PHP client for the QvaPay API
 Include the autoloader file
 
 ```php
-require(__DIR__ . '/autoload.php');  
+require(__DIR__ . '/src/autoload.php');  
 ```
 
 ## Usage
