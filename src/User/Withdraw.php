@@ -11,7 +11,7 @@ class Withdraw extends Qvapay
 			"details" =>  ["Wallet": "bc1qs67kwcf7znpnc06xjh8cnc0zwsechcfxscghun"],
 		]
 	*/
-	public function withdraw($data){
+	public function doit($data){
 		return self::action_post('withdraws', $data);
     }
 	
