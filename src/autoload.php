@@ -24,7 +24,7 @@ class Qvapay
     }
 	
 	public function get_token(){
-		return $_SESSION['qvapay_token'];
+		return isset($_SESSION['qvapay_token'])?$_SESSION['qvapay_token']:$this->token;
     }
 	
 	public function unset_token(){
