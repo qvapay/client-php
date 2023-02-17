@@ -25,9 +25,26 @@ class Qvapay
 		return $this->token;
     }
 	
+	public function set_token(){
+		session_start();
+		if(isset($_SESSION['qvapay_token'],$_SESSION['qvapay_token_expire']) && time() < $_SESSION['qvapay_token_expire'] ){
+		    $this->token = $_SESSION['qvapay_token'];
+		} else {
+		    $get_user = $this->connect();
+			$auth = json_decode($get_user);
+			if(isset($auth->accessToken)){
+				$this->token = $auth->accessToken;
+				$_SESSION['qvapay_token'] = $this->token;
+				$_SESSION['qvapay_token_expire'] = (time()+500);
+			}
+		}
+		return $this;
+    }
+	
 	public function unset_token(){
 		$this->token = "";
 		unset($_SESSION['qvapay_token']);
+		unset($_SESSION['qvapay_token_expire']);
     }
 	
 	public function set_header_token($token){
@@ -43,25 +60,10 @@ class Qvapay
 		]
 	*/
 	public function auth($data){
-        session_start();
 		$this->method = 'POST';
 		$this->post_data = $data;
 		self::set_api_url_data('auth/login');
-
-		if(isset($_SESSION['qvapay_token']) && !empty($_SESSION['qvapay_token'])){
-		    $this->token = $_SESSION['qvapay_token'];
-			return $this;
-		} else {
-		    $get_user = $this->connect();
-			$auth = json_decode($get_user);
-			  
-			if(isset($auth->accessToken)){
-				$this->token = $auth->accessToken;
-				$_SESSION['qvapay_token'] = $this->token;
-			}
-			$_SESSION['qvapay_token'] = self::get_token();
-		}
-		return $_SESSION['qvapay_token'];
+		self::set_token();
     }
 	
 	/* https://qvapay.com/api/user */
@@ -278,7 +280,7 @@ class Qvapay
 		if(!self::valid_offers_type($data)){
 		   return self::response('Invalid offer type'); 
 		}
-		return self::action_get('p2p/index?', http_build_query($data), false); 
+		return self::action_get('p2p/index?', http_build_query($data)); 
     }
 	
 	/* https://qvapay.com/api/p2p/949780ed-7303-4a34-b8c3-2d55d802c75d */
@@ -310,7 +312,7 @@ class Qvapay
 	public function action_get($action,  $data = '', $use_token = true){
 		$this->method = 'GET';
 		self::set_api_url_data($action . $data);
-		if ($use_token) self::set_header_token(self::get_token());
+		if ($use_token) self::set_header_token($this->token);
 		return self::connect(); 
     }
 	
@@ -345,6 +347,7 @@ class Qvapay
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 10);
 		curl_setopt($curl, CURLOPT_TIMEOUT, 15);
+		curl_setopt($curl, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
 		curl_setopt($curl, CURLOPT_HTTPHEADER, $this->curl_header);
 
 		$result = curl_exec($curl);
