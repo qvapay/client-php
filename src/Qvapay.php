@@ -26,6 +26,7 @@ class Qvapay
     }
 	
 	public function unset_token(){
+		$this->token = "";
 		unset($_SESSION['qvapay_token']);
     }
 	
@@ -227,7 +228,7 @@ class Qvapay
 		]
 	*/
 	public function create_payment_link($data){
-		return self::action_post('payment_links/create');
+		return self::action_post('payment_links/create',$data);
     }
 	
 	/* https://qvapay.com/api/payment_links */
