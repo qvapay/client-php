@@ -33,15 +33,15 @@ class Qvapay
 		unset($_SESSION['qvapay_token_expire']);
     }
 	
-	public function set_header_token($token){
-		$this->curl_header = array_merge($this->curl_header, ['Authorization: Bearer '.$token]);
+	public function set_header_token(){
+		$this->curl_header = array_merge($this->curl_header, ['Authorization: Bearer '.self::get_token()]);
 		
     }
 
 	public function action_post($action, $data = '', $use_token = true){
 		$this->method = 'POST';
 		self::set_api_url_data($action);
-		if ($use_token) self::set_header_token(self::get_token());
+		if ($use_token) self::set_header_token();
 		if (!empty($data)) self::custom_post_data($data);
 		return self::connect(); 
     }
@@ -49,14 +49,14 @@ class Qvapay
 	public function action_get($action,  $data = '', $use_token = true){
 		$this->method = 'GET';
 		self::set_api_url_data($action . $data);
-		if ($use_token) self::set_header_token(self::get_token());
+		if ($use_token) self::set_header_token();
 		return self::connect(); 
     }
 	
 	public function action_put($action, $data = ''){
 		$this->method = 'PUT';
 		self::set_api_url_data($action);
-		self::set_header_token($this->token);
+		self::set_header_token();
 		self::custom_post_data($data);
 		return self::connect(); 
     }
