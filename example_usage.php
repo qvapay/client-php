@@ -1,6 +1,6 @@
 <?php
 
-require(__DIR__ . '/autoload.php');  
+require(__DIR__ . '/src/autoload.php');  
 
 use Qvapay\Auth\Login;
 $auth_data = ["email" => 'blahblah@gmail.com', "password" => 'blahblahblah'];
