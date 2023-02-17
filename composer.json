@@ -1,6 +1,17 @@
 {
     "name": "qvapay",
-    "require": {
-        "src": "dev-master"
-    }
+    "version": "1.0.0",
+    "version_normalized": "1.0.0.0",
+    "authors": [
+            {
+                "name": "Blackcorsair",
+                "homepage": "https://codychat.store"
+            }
+        ],
+    "repositories": [
+        {
+            "packagist": false
+        }
+    ],
+   
 }
