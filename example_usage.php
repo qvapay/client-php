@@ -1,18 +1,18 @@
 <?php
 
-if(session_status() !== PHP_SESSION_NONE) session_start();
+require(__DIR__ . '/autoload.php');  
 
-require(__DIR__ . '/src/Qvapay.php');  
+use Qvapay\Auth\Login;
+$auth_data = ["email" => 'blahblah@gmail.com', "password" => 'blahblahblah'];
+$login = new Login($auth_data);
 
-$qvapay = new Qvapay;
-$qvapay->auth(["email" => 'blahblah@gmail.com', "password" => 'blahblahblah']);
-$response = $qvapay->services();
+$services = new Qvapay\Services\Services;
+$response = $services->show();
 
- /*
-$qvapay = new Qvapay;
-$auth_api_data = ["app_id" => "b7681925-5fdb-4236-bb03-19c725u0ca53", "app_secret" => "n1MiRuEGGg1gQvfLlWrU1O20fvxlckXbCcszyQx3JcMvwmpdmS"];
-$response = $qvapay->api_balance($auth_api_data);
-*/
+//$me = new Qvapay\User\Me;
+//$response = $me->show();
+
+//$topup = new Qvapay\User\TopUp;
+//$response = $topup->show(["pay_method" => "BTCLN","amount" =>  67]);
+
 print_r($response);
-
-?>
