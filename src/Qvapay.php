@@ -134,7 +134,7 @@ class Qvapay
     }
 	
 	/* https://qvapay.com/api/transactions/7e48853f-949c-4271-9b4a-1213ee83ac11 */
-	public function get_transaction_uuid($data){ 
+	public function get_transaction($data){ 
 		return self::action_get('transactions/', $data);
     }
 	
@@ -178,7 +178,7 @@ class Qvapay
 		]
 	*/
 	public function api_balance($data){
-		return self::action_post('v1/balance', $data);
+		return self::action_post('v1/balance', $data, false);
     }
 	
 	/* https://qvapay.com/api/v1/create_invoice */
@@ -193,7 +193,7 @@ class Qvapay
 		]
 	*/
 	public function api_create_invoice($data){
-		return self::action_post('v1/create_invoice', $data);
+		return self::action_post('v1/create_invoice', $data, false);
     }
 	
 	/* https://qvapay.com/api/v1/transactions */
@@ -214,8 +214,8 @@ class Qvapay
 			"app_secret" => "Zx03ncGDTlBFvZ0JRAq61NUkB82pekNKs1PFkBYAAiadfbzg5l"
 		]
 	*/
-	public function api_transaction_status($data){
-		return self::action_post('v1/transactions/'.$data);
+	public function api_transaction_status($data, $id){
+		return self::action_post('v1/transactions/'.$id, $data, false);
     }
 	
 	/* https://qvapay.com/api/payment_links/create */
@@ -241,6 +241,9 @@ class Qvapay
     }
 	
 	/* https://qvapay.com/api/services/e286449c-5bf4-4fbc-9a85-95bb5b54c73e */
+	/*
+	    $data = 'e286449c-5bf4-4fbc-9a85-95bb5b54c73e';
+	*/
 	public function get_service($data){
 		return self::action_get('services/', $data); 
     }
@@ -251,6 +254,12 @@ class Qvapay
     }
 	
 	/* https://qvapay.com/api/p2p/completed_pairs_average?coin=TRX */
+	/*
+	    /*
+	    $data = [
+		    "coin" => "TRX"
+		]
+	*/
 	public function pairs_average($data){
 		return self::action_get('p2p/completed_pairs_average?', http_build_query($data), false); 
     }
@@ -292,7 +301,7 @@ class Qvapay
 	public function action_post($action, $data = '', $use_token = true){
 		$this->method = 'POST';
 		self::set_api_url_data($action);
-		if ($use_token) $this->set_header_token($this->token);
+		if ($use_token) self::set_header_token($this->token);
 		if (!empty($data)) self::custom_post_data($data);
 		return self::connect(); 
     }
@@ -300,7 +309,7 @@ class Qvapay
 	public function action_get($action,  $data = '', $use_token = true){
 		$this->method = 'GET';
 		self::set_api_url_data($action . $data);
-		if ($use_token) $this->set_header_token(self::get_token());
+		if ($use_token) self::set_header_token(self::get_token());
 		return self::connect(); 
     }
 	
@@ -320,7 +329,7 @@ class Qvapay
     }
 	
 	public function response($data){
-		return json_encode(['url'=> $this->url.$this->api_url_data, 'message'=> $data]); 
+		return json_encode(['url'=> $this->url.$this->api_url_data,'token'=> self::get_token(), 'message'=> $data, 'post_data'=> $this->post_data]); 
     }
 	
 	public function connect(){
