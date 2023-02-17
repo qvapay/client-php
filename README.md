@@ -14,8 +14,7 @@ require(__DIR__ . '/src/autoload.php');
 require(__DIR__ . '/src/autoload.php');  
 
 use Qvapay\Auth\Login;
-$auth_data = ["email" => 'blahblah@gmail.com', "password" => 'blahblahblah'];
-$login = new Login($auth_data);
+$login = new Login(["email" => 'blahblah@gmail.com', "password" => 'blahblahblah']);
 
 $services = new Qvapay\Services\Services;
 $response = $services->show();
