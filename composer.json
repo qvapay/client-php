@@ -1,0 +1,6 @@
+{
+    "name": "qvapay",
+    "require": {
+        "src": "dev-master"
+    }
+}
