@@ -1,12 +1,20 @@
 {
-    "name": "BlackCorsairDev/client-php",
+    "name": "qvapay/client-php",
+    "description": "Qvapay's PHP SDK for REST APIs",
+    "keywords": ["qvapay", "payments", "rest", "sdk"],
     "version": "1.0.0",
+    "type": "library",
     "authors": [
             {
                 "name": "Blackcorsair",
                 "homepage": "https://codychat.store"
             }
         ],
+     "require": {
+        "php": ">=5.6.0",
+        "ext-curl": "*",
+        "ext-json": "*",
+    },
     "repositories": [
         {
             "packagist": false
