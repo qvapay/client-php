@@ -320,7 +320,7 @@ class Qvapay
     }
 	
 	public function response($data){
-		return json_encode(['url'=> $this->url.$this->api_url_data,'token'=> self::get_token(), 'message'=> $data, 'post_data'=> $this->post_data]); 
+		return json_encode(['url'=> $this->url.$this->api_url_data, 'message'=> $data]); 
     }
 	
 	public function connect(){
