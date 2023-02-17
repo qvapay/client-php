@@ -1,5 +1,33 @@
-# client-php
+# 📚 QvaPay PHP SDK: client-api
+
+![alt: "QvaPay Banner"](https://pbs.twimg.com/media/Eu2VPzEXEAEyVxs.jpg)
+
 PHP client for the QvaPay API
+
+## 🚀 Directory tree
+
+```
+/
+├── src/
+│   ├── Auth/
+│   │   └── ...
+│   ├── Merchants/
+│   │   └── ...
+│   └── P2p/
+│   │   └── ...
+│   └── PaymentLinks/
+│   │   └── ...
+│   └── Rates/
+│   │   └── ...
+│   └── Services/
+│   │   └── ...
+│   └── Transactions/
+│   │   └── ...
+│   └── User/
+│       └── ...
+└── ── ── ── ── ── ── ── 
+```
+
 
 ## Installation
 Include the autoloader file
