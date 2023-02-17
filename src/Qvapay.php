@@ -98,12 +98,12 @@ class Qvapay
 		]
 	*/
 	public function register($data){
-		return self::action_post('register', $data);
+		return self::action_post('auth/register', $data);
     }
 	
 	/* https://qvapay.com/api/auth/logout */
 	public function logout(){
-		return self::action_get('logout');
+		return self::action_get('auth/logout');
     }
 	
 	/* https://qvapay.com/api/topup */
