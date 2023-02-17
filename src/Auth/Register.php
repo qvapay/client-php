@@ -14,7 +14,7 @@ class Register extends Qvapay
 		]
 	*/
 	public function doit($data){
-		return parent::action_post('auth/register', $data);
+		return parent::action_post('auth/register', $data, false);
     }
 }
  
